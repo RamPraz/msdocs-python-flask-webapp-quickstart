@@ -1,30 +1,125 @@
 <!doctype html>
 <head>
-    <title>Hello Azure - Python Quickstart</title>
+    <title>Historian</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+    <script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.1/js/bootstrap-multiselect.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.1/css/bootstrap-multiselect.css" type="text/css"/>
+
+    
+    <!-- Include the plugin's CSS and JS: -->
+    <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+    <style>
+      div#loading {
+                width: 35px;
+                height: 35px;
+                display: none;
+                background: url(/static/favicon.gif) no-repeat;
+                cursor: wait;
+                  }
+      </style>
+
 </head>
 <html>
    <body>
+    <script type="text/javascript">// <![CDATA[
+      function loading(){
+          $("#loading").show();
+          $("#content").hide();       
+      }
+      // ]]>
+      </script>
+
      <main>
         <div class="px-4 py-3 my-2 text-center">
             <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/azure-icon.svg') }}" alt="Azure Logo" width="192" height="192"/>
             <!-- <img  src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-            <h1 class="display-6 fw-bold text-primary">Welcome to Azure</h1>            
+            <h1 class="display-6 fw-bold text-primary">Historian Extractor</h1>            
           </div>
-        <form method="post" action="{{url_for('hello')}}">
-            <div class="col-md-6 mx-auto text-center">
-                <label for="name" class="form-label fw-bold fs-5">Could you please tell me your name?</label>
+       
+          <form method="post" action="{{url_for('hello')}}">
+
+                <div class="col-md-6 mx-auto text-center">
+                <label for="name" class="form-label fw-bold fs-5">Enter the tag names</label>
 
                 <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
-                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
-                    <input type="text" class="form-control" id="name" name="name" style="max-width: 256px;">
-                  </div>            
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">                   
+                 
+                  <select id="example-getting-started" name="example-getting-started" multiple="multiple" >
+                    <option value="845_BLN_AI_P_FE10_02_01">845_BLN_AI_P_FE10_02_01</option>
+                    <option value="845_BLN_T3_KATH_CONC">845_BLN_T3_KATH_CONC</option>
+                    <option value="845_BLN_AI_P_FE10_02_03">845_BLN_AI_P_FE10_02_03</option>           
+                   </select>
+
+                  
+                  </div>   
+                  
+                  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
+                  <fieldset class="form-label fw-bold fs-5">
+                  <legend>Interval</legend>
+                  <input type="radio"  id="5min" name="interval" style="max-width: 256px;" value="5min" checked> 
+                  <label for="5min">5 minute</label>
+                  <input type="radio"  id="1min" name="interval" style="max-width: 256px;" value="1min" > 
+                  <label for="1min">1 minute</label>
+                  <input type="radio"  id="raw" name="interval" style="max-width: 256px;" value="raw" > 
+                  <label for="raw">Raw</label><br>                  
+                  </fieldset>
+                  </div>
+
+
+                  <div>
+                  <label for="name" class="form-label fw-bold fs-5">Start Date</label>
+
+                  <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
+                  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
+                      <input type="datetime" class="form-control" id="start_date" name="start_date" style="max-width: 256px;" value="2015-09-01T00:00:00">
+                    </div>     
+                    <label for="start_date" class="form-label fw-bold fs-5">End Date</label>
+
+                    <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
+                        <input type="datetime" class="form-control" id="end_date" name="end_date" style="max-width: 256px;" value="2015-09-10T00:00:00">
+                      </div> 
+                      
+                      
+                  <input  type="hidden"  id="tag" name="tag" value= "" />
+
+                 
+
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
-                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Say Hello</button>
+                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3" onclick="loading();">Extract</button>
                 </div>            
+
             </div>
         </form>
      </main>      
+     <script>
+      
+      $(document).ready(function () {
+        console.log('starting log');
+        //document.getElementById("tag").value = "mylist";
+        $('#example-getting-started').multiselect(
+          { enableFiltering: true,
+            selectAllValue: 'multiselect-all',            
+            onChange: function(option, checked) {
+            console.log($('#example-getting-started').val());
+            document.getElementById("tag").value = $('#example-getting-started').val();
+
+            }}
+            )
+          });
+       
+
+      
+     </script>
    </body>
 </html>
