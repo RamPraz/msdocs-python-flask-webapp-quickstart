@@ -40,54 +40,55 @@
       </script>
 
      <main>
-        <div class="px-4 py-3 my-2 text-center">
+      <div class="px-4 py-3 my-2 text-center">
             <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/azure-icon.svg') }}" alt="Azure Logo" width="192" height="192"/>
             <!-- <img  src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
             <h1 class="display-6 fw-bold text-primary">Historian Extractor</h1>            
-          </div>
-       
-          <form method="post" action="{{url_for('hello')}}">
+      </div>   
+      <div class="px-4 py-3 my-2 text-center">              
+          <form method="post" action="{{url_for('hello')}}" >
 
-                <div class="col-md-6 mx-auto text-center">
+               
                 <label for="name" class="form-label fw-bold fs-5">Enter the tag names</label>
 
                 <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">                   
                  
                   <select id="example-getting-started" name="example-getting-started" multiple="multiple" >
-                    <option value="845_BLN_AI_P_FE10_02_01">845_BLN_AI_P_FE10_02_01</option>
-                    <option value="845_BLN_T3_KATH_CONC">845_BLN_T3_KATH_CONC</option>
-                    <option value="845_BLN_AI_P_FE10_02_03">845_BLN_AI_P_FE10_02_03</option>           
-                   </select>
+                    
+                    {% for item in taglist %}
+                    <option value="{{ item }}">{{item}}</option>
+                    {% endfor %}
 
+                   </select>
                   
                   </div>   
                   
                   <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
                   <fieldset class="form-label fw-bold fs-5">
                   <legend>Interval</legend>
-                  <input type="radio"  id="5min" name="interval" style="max-width: 256px;" value="5min" checked> 
+                  <input type="radio"  id="5min" name="interval" style="max-width: 256px;" value="5min" > 
                   <label for="5min">5 minute</label>
-                  <input type="radio"  id="1min" name="interval" style="max-width: 256px;" value="1min" > 
+                  <input type="radio"  id="1min" name="interval" style="max-width: 256px;" value="1min" checked> 
                   <label for="1min">1 minute</label>
                   <input type="radio"  id="raw" name="interval" style="max-width: 256px;" value="raw" > 
-                  <label for="raw">Raw</label><br>                  
+                 <!-- <label for="raw">Raw</label><br>                  -->
                   </fieldset>
                   </div>
 
 
                   <div>
                   <label for="name" class="form-label fw-bold fs-5">Start Date</label>
-
+                  </div>
                   <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
                   <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
-                      <input type="datetime" class="form-control" id="start_date" name="start_date" style="max-width: 256px;" value="2015-09-01T00:00:00">
+                      <input type="datetime" class="form-control" id="start_date" name="start_date" style="max-width: 256px;" value="2015-10-01T00:00:00">
                     </div>     
                     <label for="start_date" class="form-label fw-bold fs-5">End Date</label>
 
                     <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
-                        <input type="datetime" class="form-control" id="end_date" name="end_date" style="max-width: 256px;" value="2015-09-10T00:00:00">
+                        <input type="datetime" class="form-control" id="end_date" name="end_date" style="max-width: 256px;" value="2015-10-4T00:00:00">
                       </div> 
                       
                       
@@ -100,6 +101,7 @@
                 </div>            
 
             </div>
+           
         </form>
      </main>      
      <script>
